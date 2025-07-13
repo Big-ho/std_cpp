@@ -15,6 +15,8 @@ set(CMAKE_CXX_CLANG_TIDY
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+find_package(OpenCV REQUIRED)
+
 # src 폴더의 모든 cpp 파일을 재귀적으로 포함
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
@@ -25,7 +27,9 @@ list(FILTER SRC_FILES EXCLUDE REGEX "src/main.cpp")
 # 메인 실행 파일
 add_executable(std_cpp ${SRC_FILES} src/main.cpp)
 target_include_directories(std_cpp PUBLIC include src)
+target_link_libraries(std_cpp PRIVATE ${OpenCV_LIBS})
 
 # 테스트 실행 파일
 add_executable(std_cpp_test ${SRC_FILES} test/main.cpp)
 target_include_directories(std_cpp_test PRIVATE include src)
+target_link_libraries(std_cpp_test PRIVATE ${OpenCV_LIBS})

@@ -1,6 +1,6 @@
 #include "core/bubble_sort.hpp"
 
-#include <vector>
+#include "core/draw.hpp"
 
 namespace std_cpp {
 
@@ -17,6 +17,9 @@ void bubble_sort(std::vector<T>& data) {
     for (size_t i = 0; i + 1 < list_size; i++) {
       if (data[i + 1] < data[i]) {
         std::swap(data[i], data[i + 1]);
+        if (std_cpp::draw_bars(data)) {
+          return;  // 사용자 종료 ('q')
+        };
         swapped = true;
       }
     }
@@ -25,6 +28,5 @@ void bubble_sort(std::vector<T>& data) {
 }
 
 template void bubble_sort<int>(std::vector<int>&);
-template void bubble_sort<double>(std::vector<double>&);
 
 }  // namespace std_cpp
