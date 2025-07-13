@@ -29,6 +29,8 @@ Testing/
 # clangd 관련 임시 파일
 .clangd/
 
+compile_commands.json
+
 # clang-tidy 임시 파일
 .clang-tidy-cache/
 

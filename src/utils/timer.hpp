@@ -11,15 +11,15 @@ namespace std_cpp::utils {
 class Timer {
  public:
   Timer(std::string name = "")
-      : name_(std::move(name)),
-        start_time_(std::chrono::high_resolution_clock::now()) {}
+      : name(std::move(name)),
+        start_time(std::chrono::high_resolution_clock::now()) {}
 
   ~Timer() {
     auto end_time = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(
-                        end_time - start_time_)
+                        end_time - start_time)
                         .count();
-    std::cout << "[TIMER] " << name_ << " 실행 시간: " << duration
+    std::cout << "[TIMER] " << name << " 실행 시간: " << duration
               << " 마이크로초\n";
   }
 
@@ -28,11 +28,11 @@ class Timer {
   Timer(Timer&&) = delete;
   auto operator=(Timer&&) -> Timer& = delete;
 
-  void reset() { start_time_ = std::chrono::high_resolution_clock::now(); }
+  void reset() { start_time = std::chrono::high_resolution_clock::now(); }
 
  private:
-  std::string name_;
-  std::chrono::high_resolution_clock::time_point start_time_;
+  std::string name;
+  std::chrono::high_resolution_clock::time_point start_time;
 };
 
 }  // namespace std_cpp::utils

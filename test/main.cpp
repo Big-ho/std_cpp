@@ -6,11 +6,10 @@
 auto main() -> int {
   try {
     const int COUNT = 10000;
-    const int MAX = 100;
 
     std_cpp::utils::RNG rng;
 
-    auto rand_list = rng.getIntList(1, MAX, COUNT);
+    auto rand_list = rng.get_int_list<int>(COUNT);
 
     {
       std_cpp::utils::Timer timer("BubbleSort");
