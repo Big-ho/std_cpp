@@ -1,0 +1,19 @@
+{
+  "editor.formatOnSave": true,
+
+  // === clangd 설정 ===
+  "clangd.arguments": [
+    "-I", "${workspaceFolder}/include",
+    "-I", "${workspaceFolder}/src",
+    "--background-index",              // 인덱스를 백그라운드로 유지
+    "--clang-tidy",                    // clang-tidy 검사 켜기
+    "--completion-style=detailed",     // 자동완성 상세히 표시
+    "--header-insertion=iwyu",         // include 지능적 삽입
+    "--suggest-missing-includes"       // 누락된 include 제안
+  ],
+  "clangd.path": "/usr/bin/clangd",    // 시스템에 맞게 조정
+
+  // === 파일 자동 저장 (선택) ===
+  "files.autoSave": "onFocusChange",
+}
+

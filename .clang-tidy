@@ -1,0 +1,44 @@
+# clang-tidy 설정 파일 (.clang-tidy)
+
+Checks: # 사용할 정적 분석 체크 목록
+  - modernize-* # 최신 C++ 스타일 권장 (auto, nullptr 등)
+  - readability-* # 코드 가독성 관련 체크
+  - bugprone-* # 잠재적인 버그 패턴 탐지
+  - performance-* # 성능 관련 검사
+  - cppcoreguidelines-* # C++ Core Guidelines 기반 검사
+  - -clang-analyzer-cplusplus.NewDeleteLeaks # false positive 방지를 위해 제외한 체크
+  - -bugprone-easily-swappable-parameters # 파라미터 위치 실수 경고 무시
+
+WarningsAsErrors: "*" # 모든 경고를 오류로 처리하여 빌드 실패 유도
+
+HeaderFilterRegex: ".*" # 모든 헤더 파일을 검사 대상에 포함
+
+FormatStyle: file # 프로젝트 내 .clang-format 파일 스타일을 따름
+
+CheckOptions: # 각 체크별 세부 옵션 설정
+  - key: modernize-use-nullptr.NullMacros # nullptr 체크 시 NULL도 인식하도록 설정
+    value: "NULL"
+
+  # 함수 이름, 변수 이름, 파라미터는 스네이크 케이스
+  - key: readability-identifier-naming.FunctionCase
+    value: lower_case
+  - key: readability-identifier-naming.VariableCase
+    value: lower_case
+  - key: readability-identifier-naming.ParameterCase
+    value: lower_case
+  - key: readability-identifier-naming.MemberCase
+    value: lower_case
+
+  # 클래스, 구조체, enum 등 타입명은 PascalCase
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+
+  # 상수는 모두 대문자 + 언더스코어
+  - key: readability-identifier-naming.ConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.EnumConstantCase
+    value: UPPER_CASE
