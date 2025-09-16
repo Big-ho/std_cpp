@@ -1,5 +1,5 @@
 BasedOnStyle: Google            # Google 스타일을 기본으로 사용
-IndentWidth: 2                  # 들여쓰기 너비 (공백 2칸)
+IndentWidth: 2                 # 들여쓰기 너비 (공백 2칸)
 ColumnLimit: 100                # 한 줄 최대 길이 (100자)
 AllowShortFunctionsOnASingleLine: Inline   # 짧은 함수는 한 줄에 작성 허용
 DerivePointerAlignment: false  # 포인터 정렬은 수동 지정
