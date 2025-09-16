@@ -17,7 +17,7 @@ namespace std_cpp {
 auto draw_bars(const std::vector<int>& data) {
   cv::Mat img(HEIGHT, WIDTH, CV_8UC3, BACKGROUND);
 
-  int bar_width = WIDTH / (int)data.size();
+  int bar_width = WIDTH / (int) data.size();
 
   for (int i = 0; i < data.size(); i++) {
     int pos_x = i * bar_width;
