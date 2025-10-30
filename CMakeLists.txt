@@ -8,9 +8,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # clang-tidy 설정 (빌드 시 자동 실행)
 set(CMAKE_CXX_CLANG_TIDY
   clang-tidy
-  -checks=modernize-*,readability-*,bugprone-*,-bugprone-easily-swappable-parameters
-  -warnings-as-errors=*,
-  -header-filter=.*,
 )
 
 set(library_name ${PROJECT_NAME})

@@ -1,22 +1,22 @@
-# clang-tidy 설정 파일 (.clang-tidy)
+# .clang-tidy 파일에 사용
 
 Checks: # 사용할 정적 분석 체크 목록
-  - modernize-* # 최신 C++ 스타일 권장 (auto, nullptr 등)
-  - readability-* # 코드 가독성 관련 체크
-  - bugprone-* # 잠재적인 버그 패턴 탐지
-  - performance-* # 성능 관련 검사
-  - cppcoreguidelines-* # C++ Core Guidelines 기반 검사
-  - -clang-analyzer-cplusplus.NewDeleteLeaks # false positive 방지를 위해 제외한 체크
-  - -bugprone-easily-swappable-parameters # 파라미터 위치 실수 경고 무시
+  - modernize-*
+  - readability-*
+  - bugprone-*
+  - performance-*
+  - cppcoreguidelines-*
+  - -clang-analyzer-cplusplus.NewDeleteLeaks
+  - -bugprone-easily-swappable-parameters # 이 설정은 CMake 설정의 -bugprone-easily-swappable-parameters와 중복되므로, .clang-tidy에 남겨둡니다.
 
-WarningsAsErrors: "*" # 모든 경고를 오류로 처리하여 빌드 실패 유도
+WarningsAsErrors: "*" # 모든 경고를 오류로 처리 (CMake 설정과 중복되므로 .clang-tidy에만 남김)
 
-HeaderFilterRegex: ".*" # 모든 헤더 파일을 검사 대상에 포함
+HeaderFilterRegex: ".*" # 모든 헤더 파일을 검사 (CMake 설정과 중복되므로 .clang-tidy에만 남김)
 
-FormatStyle: file # 프로젝트 내 .clang-format 파일 스타일을 따름
+FormatStyle: file
 
-CheckOptions: # 각 체크별 세부 옵션 설정
-  - key: modernize-use-nullptr.NullMacros # nullptr 체크 시 NULL도 인식하도록 설정
+CheckOptions: # 각 체크별 세부 옵션 설정 (이 부분은 CMake에서 설정 불가능)
+  - key: modernize-use-nullptr.NullMacros
     value: "NULL"
 
   # 함수 이름, 변수 이름, 파라미터는 스네이크 케이스
