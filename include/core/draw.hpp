@@ -5,7 +5,7 @@
 
 namespace std_cpp {
 
-auto draw_bars(const std::vector<int>& data) -> bool;
+auto DrawBars(const std::vector<int>& data) -> bool;
 
 }  // namespace std_cpp
 

@@ -1,3 +1,5 @@
+// test
+
 #include <iostream>
 #include <opencv2/highgui.hpp>
 #include <opencv2/opencv.hpp>
@@ -10,26 +12,26 @@
 
 auto main() -> int {
   try {
-    const int LONG = 500;
-    const int SHOT = 50;
+    const int kLong = 500;
+    const int kShot = 50;
 
     std_cpp::utils::RNG rng;
 
-    auto long_list = rng.get_int_list<int>(LONG);
-    auto shot_list = rng.get_int_list<int>(SHOT);
+    auto long_list = rng.GetShuffledSequence<int>(kLong);
+    auto shot_list = rng.GetShuffledSequence<int>(kShot);
 
     {
       cv::namedWindow("Sort Visualizer", cv::WINDOW_AUTOSIZE);
-      std_cpp::draw_bars(shot_list);
+      std_cpp::DrawBars(shot_list);
       std_cpp::utils::Timer timer("BubbleSort");
-      std_cpp::bubble_sort(shot_list);
+      std_cpp::BubbleSort(shot_list);
       cv::destroyWindow("Sort Visualizer");
     }
     {
       cv::namedWindow("Sort Visualizer", cv::WINDOW_AUTOSIZE);
-      std_cpp::draw_bars(long_list);
+      std_cpp::DrawBars(long_list);
       std_cpp::utils::Timer timer("QuickSort");
-      std_cpp::quick_sort(long_list, 0, LONG - 1);
+      std_cpp::QuickSort(long_list, 0, kLong - 1);
       cv::destroyWindow("Sort Visualizer");
     }
 

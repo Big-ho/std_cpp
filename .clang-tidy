@@ -1,35 +1,53 @@
-# .clang-tidy 파일에 사용
+# .clang-tidy
 
 Checks: # 사용할 정적 분석 체크 목록
-  - modernize-*
-  - readability-*
-  - bugprone-*
-  - performance-*
-  - cppcoreguidelines-*
+  # 구글 스타일 가이드 활성화
+  - 'google-*'
+  # 현대적인 C++ 코드.
+  - 'modernize-*'
+  - 'readability-*'
+  - 'bugprone-*'
+  - 'performance-*'
+  - 'cppcoreguidelines-*'
+
+  # 제외할 체크 목록
   - -clang-analyzer-cplusplus.NewDeleteLeaks
-  - -bugprone-easily-swappable-parameters # 이 설정은 CMake 설정의 -bugprone-easily-swappable-parameters와 중복되므로, .clang-tidy에 남겨둡니다.
+  - -bugprone-easily-swappable-parameters
 
-WarningsAsErrors: "*" # 모든 경고를 오류로 처리 (CMake 설정과 중복되므로 .clang-tidy에만 남김)
+WarningsAsErrors: "*" # 모든 경고를 오류로 처리
 
-HeaderFilterRegex: ".*" # 모든 헤더 파일을 검사 (CMake 설정과 중복되므로 .clang-tidy에만 남김)
+HeaderFilterRegex: '^(src|include)/.*' # 프로젝트 내부 헤더만 검사
 
-FormatStyle: file
+FormatStyle: file  # .clang-format 파일 사용
 
-CheckOptions: # 각 체크별 세부 옵션 설정 (이 부분은 CMake에서 설정 불가능)
+CheckOptions: # 각 체크별 세부 옵션 설정
   - key: modernize-use-nullptr.NullMacros
     value: "NULL"
 
-  # 함수 이름, 변수 이름, 파라미터는 스네이크 케이스
+  # Google 스타일 네이밍 규칙
+  # 함수/메서드: MyFunction() (CamelCase)
   - key: readability-identifier-naming.FunctionCase
-    value: lower_case
+    value: CamelCase
+  - key: readability-identifier-naming.MethodCase
+    value: CamelCase
+
+  # 일반 변수 및 파라미터: my_variable (lower_case)
   - key: readability-identifier-naming.VariableCase
     value: lower_case
   - key: readability-identifier-naming.ParameterCase
     value: lower_case
+
+  # 멤버 변수: my_member_ (lower_case + 후행 밑줄)
   - key: readability-identifier-naming.MemberCase
     value: lower_case
+  - key: readability-identifier-naming.MemberSuffix
+    value: '_'
+  - key: readability-identifier-naming.PrivateMemberSuffix
+    value: '_'
+  - key: readability-identifier-naming.MemberPrefix
+    value: '' # 선행 밑줄 금지
 
-  # 클래스, 구조체, enum 등 타입명은 PascalCase
+  # 타입(클래스, 구조체, Enum): MyType (CamelCase)
   - key: readability-identifier-naming.ClassCase
     value: CamelCase
   - key: readability-identifier-naming.StructCase
@@ -37,8 +55,12 @@ CheckOptions: # 각 체크별 세부 옵션 설정 (이 부분은 CMake에서 �
   - key: readability-identifier-naming.EnumCase
     value: CamelCase
 
-  # 상수는 모두 대문자 + 언더스코어
+  # 상수 및 Enum 값: kMyConstant (k + CamelCase)
   - key: readability-identifier-naming.ConstantCase
-    value: UPPER_CASE
+    value: CamelCase
+  - key: readability-identifier-naming.ConstantPrefix
+    value: 'k'
   - key: readability-identifier-naming.EnumConstantCase
-    value: UPPER_CASE
+    value: CamelCase
+  - key: readability-identifier-naming.EnumConstantPrefix
+    value: 'k'

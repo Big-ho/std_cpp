@@ -1,32 +1,53 @@
-cmake_minimum_required(VERSION 3.10)
-project(std_cpp)
+cmake_minimum_required(VERSION 3.16)
+project(std_cpp LANGUAGES CXX)
 
+# C++ 설정 및 컴파일러 플래그
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_CLANG_TIDY clang-tidy)
 
-# clang-tidy 설정 (빌드 시 자동 실행)
-set(CMAKE_CXX_CLANG_TIDY
-  clang-tidy
+# 라이브러리 (OpenCV) 설정
+find_package(OpenCV REQUIRED)
+if(OpenCV_FOUND)
+  message(STATUS "OpenCV: Found OpenCV ${OpenCV_VERSION}")
+  set(OPENCV_REQUIRED_LIBS ${OpenCV_LIBS})
+  set(OPENCV_REQUIRED_INCLUDES ${OpenCV_INCLUDE_DIRS})
+else()
+  message(FATAL_ERROR "OpenCV not found!")
+endif()
+
+# 공통 라이브러리 타겟 (std_cpp_lib)
+add_library(${PROJECT_NAME}_lib STATIC)
+target_sources(${PROJECT_NAME}_lib
+  PRIVATE
+    src/core/draw.cpp
+    src/core/bubble_sort.cpp
+    src/core/quick_sort.cpp
 )
 
-set(library_name ${PROJECT_NAME})
-
-
-# src 폴더의 모든 cpp 파일을 재귀적으로 포함
-file(GLOB_RECURSE SRC_FILES src/*.cpp)
-
-# src/main.cpp 파일만 빼고 SRC_FILES에 저장
-list(FILTER SRC_FILES EXCLUDE REGEX "src/main.cpp")
-
-find_package(OpenCV REQUIRED)
+# 라이브러리 인클루드 경로 설정
+target_include_directories(${PROJECT_NAME}_lib
+  PUBLIC
+    include
+    ${OPENCV_REQUIRED_INCLUDES}
+  PRIVATE
+    src
+)
 
 # 메인 실행 파일
-add_executable(${PROJECT_NAME} ${SRC_FILES} src/main.cpp)
-target_include_directories(${PROJECT_NAME} PUBLIC include src)
-target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCV_LIBS})
+add_executable(${PROJECT_NAME} src/main.cpp)
+target_link_libraries(${PROJECT_NAME}
+  PRIVATE
+    ${PROJECT_NAME}_lib
+    ${OPENCV_REQUIRED_LIBS}
+)
 
 # 테스트 실행 파일
-add_executable(${PROJECT_NAME}_test ${SRC_FILES} test/main.cpp)
-target_include_directories(${PROJECT_NAME}_test PRIVATE include src)
-target_link_libraries(${PROJECT_NAME}_test PRIVATE ${OpenCV_LIBS})
+add_executable(${PROJECT_NAME}_test test/main.cpp)
+target_link_libraries(${PROJECT_NAME}_test
+  PRIVATE
+    ${PROJECT_NAME}_lib
+    ${OPENCV_REQUIRED_LIBS}
+)
+add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_test)

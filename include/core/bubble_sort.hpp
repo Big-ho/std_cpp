@@ -6,7 +6,7 @@
 namespace std_cpp {
 
 template <typename T>
-void bubble_sort(std::vector<T>& data);
+void BubbleSort(std::vector<T>& data);
 
 }  // namespace std_cpp
 

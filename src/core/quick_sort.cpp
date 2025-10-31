@@ -1,5 +1,6 @@
 #include "core/quick_sort.hpp"
 
+#include <cstddef>
 #include <optional>
 
 #include "core/draw.hpp"
@@ -7,17 +8,17 @@
 namespace std_cpp {
 
 template <typename T>
-auto partition(std::vector<T>& data, size_t begin_index, size_t end_index)
+auto Partition(std::vector<T>& data, size_t begin_index, size_t end_index)
     -> std::optional<size_t> {
-  T pivot = data[begin_index];
+  const T kPivot = data[begin_index];
   size_t low = begin_index + 1;
   size_t high = end_index;
 
   while (true) {
-    while (low <= end_index && data[low] < pivot) {
+    while (low <= end_index && data[low] < kPivot) {
       low++;
     }
-    while (high >= begin_index + 1 && data[high] > pivot) {
+    while (high >= begin_index + 1 && data[high] > kPivot) {
       high--;
     }
     if (low >= high) {
@@ -25,14 +26,14 @@ auto partition(std::vector<T>& data, size_t begin_index, size_t end_index)
     }
 
     std::swap(data[low], data[high]);
-    if (std_cpp::draw_bars(data)) {
+    if (std_cpp::DrawBars(data)) {
       return std::nullopt;
     }
     low++;
     high--;
   }
   std::swap(data[begin_index], data[high]);
-  if (std_cpp::draw_bars(data)) {
+  if (std_cpp::DrawBars(data)) {
     return std::nullopt;
   }
 
@@ -40,21 +41,26 @@ auto partition(std::vector<T>& data, size_t begin_index, size_t end_index)
 }
 
 template <typename T>
-void quick_sort(std::vector<T>& data, size_t begin_index, size_t end_index) {
-  if (begin_index < end_index) {
-    auto pivot_opt = partition(data, begin_index, end_index);
-    if (!pivot_opt.has_value()) {
-      return;  // 사용자 종료 ('q')
-    }
+void QuickSort(std::vector<T>& data, size_t begin_index, size_t end_index) {
+  if (begin_index >= end_index) {
+    return;
+  }
 
-    size_t pivot = pivot_opt.value();
-    if (pivot > 0) {
-      quick_sort(data, begin_index, pivot - 1);
-    }
-    quick_sort(data, pivot + 1, end_index);
+  auto pivot_opt = Partition(data, begin_index, end_index);
+  if (!pivot_opt.has_value()) {
+    return;  // 사용자 종료 ('q)
+  }
+
+  size_t pivot = pivot_opt.value();
+
+  if (pivot > begin_index) {
+    QuickSort(data, begin_index, pivot - 1);
+  }
+  if (pivot < end_index) {
+    QuickSort(data, pivot + 1, end_index);
   }
 }
 
-template void quick_sort<int>(std::vector<int>&, size_t, size_t);
+template void QuickSort<int>(std::vector<int>&, size_t, size_t);
 
 }  // namespace std_cpp
